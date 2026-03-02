@@ -1,5 +1,4 @@
 ---
-# defaults file for docker roles
 docker_repo_url: "https://download.docker.com/linux/ubuntu"
 docker_gpg_url: "{{ docker_repo_url }}/gpg"
 docker_keyring_path: "/etc/apt/keyrings"
@@ -16,3 +15,7 @@ docker_packages:
   - containerd.io
   - docker-buildx-plugin
   - docker-compose-plugin
+
+docker_package_state: present
+docker_service_state: started
+docker_service_enabled: true

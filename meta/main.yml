@@ -1,0 +1,12 @@
+galaxy_info:
+  role_name: docker
+  description: Docker Engine installation role
+  min_ansible_version: "2.12"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+        - focal
+
+dependencies: []
