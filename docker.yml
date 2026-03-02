@@ -1,0 +1,9 @@
+# Playbook to run Docker install role
+#
+# Example command
+# ansible-playbook -i inventory docker.yml
+
+- hosts: localhost
+  connection: local
+  roles:
+   - docker

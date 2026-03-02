@@ -1,0 +1,54 @@
+---
+# tasks file for docker
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install prerequisite packages
+  ansible.builtin.apt:
+    name: "{{ docker_prereq_packages }}"
+    state: present
+
+- name: Create keyrings directory
+  ansible.builtin.file:
+    path: "{{ docker_keyring_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Download Docker GPG key
+  ansible.builtin.get_url:
+    url: "{{ docker_gpg_url }}"
+    dest: "{{ docker_keyring_file }}"
+    mode: '0644'
+
+- name: Configure Docker repository
+  ansible.builtin.copy:
+    dest: "{{ docker_sources_file }}"
+    content: |
+      Types: deb
+      URIs: {{ docker_repo_url }}
+      Suites: {{ ansible_distribution_release }}
+      Components: stable
+      Signed-By: {{ docker_keyring_file }}
+    mode: '0644'
+
+- name: Update apt cache after adding Docker repo
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install Docker Engine and related packages
+  ansible.builtin.apt:
+    name: "{{ docker_packages }}"
+    state: present
+
+- name: Ensure Docker service is enabled and running
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add malcolm user account to Docker group
+  user:
+    name: malcolm
+    groups: docker
+    append: yes
