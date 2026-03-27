@@ -66,12 +66,9 @@
   loop: "{{ docker_volume_directories }}"
 
 - name: Download nginx reverse proxy files from S3
-  amazon.aws.aws_s3:
-    bucket: docker-volumes-663468155566-eu-west-1-an
-    object: nginx/rproxy/
-    dest: /home/malcolm/docker-volumes/nginx/rproxy/
-    mode: get
-    recursive: yes
+  ansible.builtin.command: >
+    aws s3 sync s3://docker-volumes-663468155566-eu-west-1-an/nginx/rproxy/
+    /home/malcolm/docker-volumes/nginx/rproxy/
   register: s3_download
 
 - name: Ensure correct ownership on downloaded files
