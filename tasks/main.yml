@@ -65,14 +65,6 @@
     mode: "0755"
   loop: "{{ docker_volume_directories }}"
 
-- name: Add directoriey for mounting truenas
-  ansible.builtin.file:
-    path: "{{ truenas_directory }}"
-    state: directory
-    owner: malcolm
-    group: malcolm
-    mode: "0755"
-
 - name: Download nginx reverse proxy files from S3
   ansible.builtin.command: >
     aws s3 sync s3://docker-volumes-663468155566-eu-west-1-an/nginx/rproxy/

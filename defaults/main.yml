@@ -33,4 +33,3 @@ docker_volume_directories:
 docker_volume_reverse_proxy_available_path: /home/malcolm/docker-volumes/nginx/rproxy/config/conf.d/sites-available
 docker_volume_reverse_proxy_enabled_path: /home/malcolm/docker-volumes/nginx/rproxy/config/conf.d/sites-enabled
 
-truenas_directory: /home/malcolm/truenas
