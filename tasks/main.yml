@@ -101,9 +101,9 @@
     file_type: file
   register: available_files
 
-- name: Create symlinks in sites-enabled pointing to sites-available
+- name: Create relative symlinks in sites-enabled
   ansible.builtin.file:
-    src: "{{ docker_volume_reverse_proxy_available_path }}/{{ item.path | basename }}"
+    src: "../sites-available/{{ item.path | basename }}"
     dest: "{{ docker_volume_reverse_proxy_enabled_path }}/{{ item.path | basename }}"
     state: link
   loop: "{{ available_files.files }}"
