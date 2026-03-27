@@ -103,7 +103,7 @@
 
 - name: Create symlinks in sites-enabled pointing to nginx enabled path
   ansible.builtin.file:
-    src: "{{ docker_volume_reverse_proxy_available_path }}/{{ item.path | basename }}"
+    src: "{{ reverse_proxy_sites_enabled_path }}/{{ item.path | basename }}"
     dest: "{{ docker_volume_reverse_proxy_enabled_path }}/{{ item.path | basename }}"
     state: link
   loop: "{{ available_files.files }}"
