@@ -70,6 +70,7 @@
     aws s3 sync s3://docker-volumes-663468155566-eu-west-1-an/nginx/rproxy/
     /home/malcolm/docker-volumes/nginx/rproxy/
   register: s3_download
+  become_user: malcolm
 
 - name: Ensure correct ownership on downloaded files
   ansible.builtin.file:
