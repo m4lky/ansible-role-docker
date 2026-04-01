@@ -65,14 +65,32 @@
     mode: "0755"
   loop: "{{ docker_volume_directories }}"
 
-- name: Download nginx reverse proxy files from S3
-  ansible.builtin.command: >
-    aws s3 sync s3://docker-volumes-663468155566-eu-west-1-an/nginx/rproxy/
-    /home/malcolm/docker-volumes/nginx/rproxy/
-  register: s3_download
-  become_user: malcolm
+# - name: Download nginx reverse proxy files from S3
+#   ansible.builtin.command: >
+#     aws s3 sync s3://docker-volumes-663468155566-eu-west-1-an/nginx/rproxy/
+#     /home/malcolm/docker-volumes/nginx/rproxy/
+#   register: s3_download
+#   become_user: malcolm
 
-- name: Ensure correct ownership on downloaded files
+- name: Copy nginx config directory
+  ansible.builtin.copy:
+    src: "nginx/config/"
+    dest: "/home/malcolm/docker-volumes/nginx/rproxy/config/"
+    mode: '0664'
+
+- name: Copy nginx certs directory
+  ansible.builtin.copy:
+    src: "nginx/certs/"
+    dest: "/home/malcolm/docker-volumes/nginx/rproxy/config/"
+    mode: '0664'
+
+- name: Deploy all nginx templates for reverse proxy
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ docker_volume_reverse_proxy_available_path }}/{{ item | basename | regex_replace('\\.j2$', '') }}"
+  loop: "{{ query('fileglob', role_path + '/templates/nginx/*.j2') }}"
+
+- name: Ensure correct ownership on config files
   ansible.builtin.file:
     path: /home/malcolm/docker-volumes/nginx/rproxy/
     owner: malcolm

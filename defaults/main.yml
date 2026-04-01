@@ -24,7 +24,10 @@ docker_volume_directories:
   - /home/malcolm/docker-volumes/jenkins
   - /home/malcolm/docker-volumes/transmission/config 
   - /home/malcolm/docker-volumes/transmission/watch
-  - /home/malcolm/docker-volumes/nginx/rproxy
+  - /home/malcolm/docker-volumes/nginx/rproxy/certs
+  - /home/malcolm/docker-volumes/nginx/rproxy/config/conf.d
+  - /home/malcolm/docker-volumes/nginx/rproxy/config/conf.d/sites-available
+  - /home/malcolm/docker-volumes/nginx/rproxy/config/conf.d/sites-enabled
   - /home/malcolm/docker-volumes/portainer
   - /home/malcolm/docker-volumes/unifi-mongodb/data
   - /home/malcolm/docker-volumes/unifi-mongodb/init
